@@ -2,7 +2,7 @@ import Header from "./components/Header"
 import TodoEditor from "./components/TodoEditor"
 import TodoList from "./components/TodoList"
 import './App.css'
-import { useState,useRef } from "react"
+import { useState, useRef } from "react"
 
 const mockData = [
   {
@@ -39,14 +39,26 @@ function App() {
       date: new Date().getTime()
     }
 
-    setTodos([newTodo,...todos])
+    setTodos([newTodo, ...todos])
+  }
+
+  const onUpdate = (targetId, updates) => {
+
+    setTodos((prev) =>
+      prev.map((todo) =>
+        todo.id == targetId
+          ? { ...todo, ...updates }
+          : todo
+      )
+    )
+
   }
 
   return (
     <div className="App">
       <Header />
       <TodoEditor onCreate={onCreate} />
-      <TodoList />
+      <TodoList todos={todos} />
     </div>
   )
 }
